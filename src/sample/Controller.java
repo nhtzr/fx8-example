@@ -18,11 +18,7 @@ import static sample.streams.Predicates.not;
 
 public class Controller implements Initializable {
 
-    private static final Collection<String> EMPTY_LINES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
-            "select",
-            "from",
-            "where",
-            ";")));
+    private static final Collection<String> EMPTY_LINES = Collections.unmodifiableSet(Collections.singleton(";"));
 
     @FXML
     public TableView<QueryLine> queryTableView;
