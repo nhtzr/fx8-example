@@ -8,8 +8,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import javafx.util.converter.DefaultStringConverter;
-import org.apache.commons.lang3.StringUtils;
-import sample.model.QueryLines;
+import sample.model.QueryLine;
 
 import static org.apache.commons.lang3.StringUtils.normalizeSpace;
 
@@ -45,31 +44,31 @@ public class Properties {
     }
 
 
-    public static TableColumn<QueryLines, Boolean> columnEditableBoolean(
-            Getter<QueryLines, Boolean> getter,
-            Setter<QueryLines, Boolean> setter) {
-        TableColumn<QueryLines, Boolean> column = new TableColumn<>();
+    public static TableColumn<QueryLine, Boolean> columnEditableBoolean(
+            Getter<QueryLine, Boolean> getter,
+            Setter<QueryLine, Boolean> setter) {
+        TableColumn<QueryLine, Boolean> column = new TableColumn<>();
         column.setCellFactory(CheckBoxTableCell.forTableColumn(column::getCellObservableValue));
         column.setCellValueFactory(editableBooleanPropertyValueFactory(getter, setter));
         return column;
     }
 
-    public static <T> QueryLines getValue(TableColumn.CellEditEvent<QueryLines, T> t) {
+    public static <T> QueryLine getValue(TableColumn.CellEditEvent<QueryLine, T> t) {
         return t.getTableView().getItems().get(t.getTablePosition().getRow());
     }
 
-    public static TableColumn<QueryLines, String> columnEditableString(
-            Getter<QueryLines, String> getter,
-            Setter<QueryLines, String> setter) {
-        TableColumn<QueryLines, String> column = new TableColumn<>();
+    public static TableColumn<QueryLine, String> columnEditableString(
+            Getter<QueryLine, String> getter,
+            Setter<QueryLine, String> setter) {
+        TableColumn<QueryLine, String> column = new TableColumn<>();
         column.setCellFactory(TextFieldTableCell.forTableColumn());
         column.setCellValueFactory(editableStringPropertyValueFactory(getter, setter));
         column.setOnEditCommit(t -> setter.invoke(getValue(t), t.getNewValue()));
         return column;
     }
 
-    public static TableColumn<QueryLines, String> columnAreaString(Getter<QueryLines, String> getter, Setter<QueryLines, String> setter) {
-        TableColumn<QueryLines, String> column = new TableColumn<>();
+    public static TableColumn<QueryLine, String> columnAreaString(Getter<QueryLine, String> getter, Setter<QueryLine, String> setter) {
+        TableColumn<QueryLine, String> column = new TableColumn<>();
         column.setCellFactory(TextAreaTableCell.forTableColumn(normalizeSpaceConverter()));
         column.setCellValueFactory(editableStringPropertyValueFactory(getter, setter));
         column.setOnEditCommit(t -> setter.invoke(getValue(t), t.getNewValue()));

@@ -3,17 +3,17 @@ package sample.model;
 /**
  * Created by e.rosas.garcia on 17/11/2016.
  */
-public class QueryLines {
+public class QueryLine {
 
     private boolean enabled;
     private String line;
 
-    public QueryLines(String queryLine) {
+    public QueryLine(String queryLine) {
         this.enabled = !queryLine.startsWith("--");
         this.line = queryLine.replace("--", "");
     }
 
-    public QueryLines(boolean enabled, String line) {
+    public QueryLine(boolean enabled, String line) {
         this.enabled = enabled;
         this.line = line;
     }
@@ -36,7 +36,7 @@ public class QueryLines {
 
     @Override
     public String toString() {
-        return "QueryLines{" +
+        return "QueryLine{" +
                 "enabled=" + enabled +
                 ", line='" + line + '\'' +
                 '}';

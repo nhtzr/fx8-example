@@ -4,7 +4,7 @@ import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
-import sample.model.QueryLines;
+import sample.model.QueryLine;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -25,30 +25,30 @@ public class Controller implements Initializable {
             ";")));
 
     @FXML
-    public TableView<QueryLines> queryTableView;
+    public TableView<QueryLine> queryTableView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(getClass()
-                        .getResourceAsStream("/base_query.sql")));
-
         queryTableView.getColumns().setAll(
-                columnEditableBoolean(QueryLines::isEnabled, QueryLines::setEnabled),
-                columnAreaString(QueryLines::getLine, QueryLines::setLine));
-        queryTableView.setItems(new ObservableListWrapper<>(reader
-                .lines()
-                .map(String::trim)
-                .filter(not(String::isEmpty))
-                .filter(not(EMPTY_LINES::contains))
-                .map(QueryLines::new)
-                .collect(Collectors.toList())));
-
-        queryTableView.itemsProperty().addListener((observable, oldValue, newValue) -> System.out.println("newValue = " + newValue));
+                columnEditableBoolean(QueryLine::isEnabled, QueryLine::setEnabled),
+                columnAreaString(QueryLine::getLine, QueryLine::setLine));
+        queryTableView.setItems(new ObservableListWrapper<>(
+                readFrom("/base_query.sql")
+                        .lines()
+                        .map(String::trim)
+                        .filter(not(String::isEmpty))
+                        .filter(not(EMPTY_LINES::contains))
+                        .map(QueryLine::new)
+                        .collect(Collectors.toList())));
     }
 
     public void printAll() {
         queryTableView.getItems().forEach(System.out::println);
     }
 
+    private BufferedReader readFrom(String filePath) {
+        return new BufferedReader(
+                new InputStreamReader(getClass()
+                        .getResourceAsStream(filePath)));
+    }
 }
