@@ -73,6 +73,7 @@ public class Properties {
         column.setCellFactory(TextAreaTableCell.forTableColumn(normalizeSpaceConverter()));
         column.setCellValueFactory(editableStringPropertyValueFactory(getter, setter));
         column.setOnEditCommit(t -> setter.invoke(getValue(t), t.getNewValue()));
+        column.setSortable(false);
         return column;
     }
 
