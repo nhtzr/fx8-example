@@ -50,6 +50,7 @@ public class Properties {
         TableColumn<QueryLine, Boolean> column = new TableColumn<>();
         column.setCellFactory(CheckBoxTableCell.forTableColumn(column::getCellObservableValue));
         column.setCellValueFactory(editableBooleanPropertyValueFactory(getter, setter));
+        column.setSortable(false);
         return column;
     }
 
