@@ -18,13 +18,12 @@ public class Service {
 
     public String buildSqlQuery(Collection<QueryLine> lines) {
         final Set<String> keyWordsUsed = new HashSet<>();
-        String sqlQuery = lines.stream()
+        return lines.stream()
                 .filter(QueryLine::isEnabled)
                 .map(QueryLine::getLine)
                 .map(String::trim)
                 .map(line -> processKeyWords(line, keyWordsUsed))
                 .collect(Collectors.joining("\n"));
-        return sqlQuery;
     }
 
 
