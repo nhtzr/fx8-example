@@ -23,6 +23,8 @@ public class Controller implements Initializable {
     @FXML
     public TableView<QueryLine> queryTableView;
 
+    private Service service = new Service();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         queryTableView.getColumns().setAll(
@@ -39,7 +41,8 @@ public class Controller implements Initializable {
     }
 
     public void printAll() {
-        queryTableView.getItems().forEach(System.out::println);
+        String query = service.buildSqlQuery(queryTableView.getItems());
+        System.out.println("query = " + query);
     }
 
     private BufferedReader readFrom(String filePath) {
