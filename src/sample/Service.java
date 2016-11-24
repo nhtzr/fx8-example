@@ -2,10 +2,7 @@ package sample;
 
 import sample.model.QueryLine;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -15,7 +12,8 @@ import java.util.stream.Collectors;
  */
 public class Service {
 
-    private Set<String> keywords = new HashSet<>(Arrays.asList("select", "from", "where"));
+    private Map<String, String> keywordReplacements = buildKeywordReplacements();
+    private Set<String> keywords = keywordReplacements.keySet();
     private Pattern keywordPattern = Pattern.compile("^\\s*(\\w+)");
 
     public String buildSqlQuery(Collection<QueryLine> lines) {
@@ -51,16 +49,15 @@ public class Service {
     }
 
     private String replacementOf(String keyword) {
-        switch (keyword) {
-            case "select":
-                return ",";
-            case "from":
-                return "from";
-            case "where":
-                return "and";
-            default:
-                return keyword;
-        }
+        return Optional.ofNullable(keywordReplacements.get(keyword)).orElse("keyword");
+    }
+
+    private Map<String, String> buildKeywordReplacements() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("select", ",");
+        map.put("from", "from");
+        map.put("where", "and");
+        return map;
     }
 
 }
